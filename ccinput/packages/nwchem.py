@@ -56,6 +56,7 @@ class NWChemCalculation:
         CalcType.NMR: ["property"],
         CalcType.SP: ["energy"],
         CalcType.OPTFREQ: ["optimize", "freq"],
+        CalcType.TSFREQ: ["optimize", "freq"],
         CalcType.MEP: ["neb ignore"],
     }
 
@@ -280,6 +281,7 @@ class NWChemCalculation:
                     CalcType.OPT,
                     CalcType.TS,
                     CalcType.OPTFREQ,
+                    CalcType.TSFREQ,
                 ]
             ):
                 if self.calculation_block == "":
@@ -291,7 +293,7 @@ class NWChemCalculation:
                 if self.calculation_block == "":
                     self.calculation_block += f"\n freq \n"
                 self.calculation_block += f"{command} \n"
-            elif block_name == "freq" and self.calc.type == CalcType.OPTFREQ:
+            elif block_name == "freq" and self.calc.type in [CalcType.OPTFREQ, CalcType.TSFREQ]:
                 temp += f"{command} \n"
             elif (
                 block_name in ["neb", "string", "fsm", "mep"]

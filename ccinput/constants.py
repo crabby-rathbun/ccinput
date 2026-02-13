@@ -19,6 +19,7 @@ class CalcType(Enum):
     CONSTR_CONF_SEARCH = 15
 
     OPTFREQ = 20
+    TSFREQ = 21
 
 
 ATOMIC_NUMBER = {}
@@ -118,6 +119,7 @@ SYN_TYPES = {
         "mos",
     ],
     CalcType.OPTFREQ: ["Opt+Freq Calculation", "optfreq", "opt+freq"],
+    CalcType.TSFREQ: ["TS+Freq Calculation", "tsfreq", "ts+freq"],
     CalcType.CONF_SEARCH: [
         "Conformational Search",
         "conformersearch",

@@ -41,6 +41,7 @@ class GaussianCalculation:
         CalcType.UVVIS: ["td"],
         CalcType.UVVIS_TDA: ["tda"],
         CalcType.OPTFREQ: ["opt", "freq"],
+        CalcType.TSFREQ: ["opt", "freq"],
     }
 
     # Get a set of all unique calculation keywords

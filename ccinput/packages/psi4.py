@@ -35,6 +35,7 @@ molecule {{
         CalcType.FREQ: ["freq", "frequency", "frequencies"],
         # CalcType.TS,
         CalcType.OPTFREQ: ["Opt+Freq Calculation", "optfreq", "opt+freq"],
+        CalcType.TSFREQ: ["TS+Freq Calculation", "tsfreq", "ts+freq"],
     }
 
     def __init__(self, calc: Calculation):
@@ -250,6 +251,34 @@ molecule {{
                 calc_type["freq"], method, basis_set, specifications=freq_specs
             )
             self.command_line += f"{cmls_opt}\n{cmls_freqs}"
+        elif self.calc.type == CalcType.TSFREQ:
+            multi_specs = self.convert_multispecs_to_dictionary()
+            calc_type = {"freq": "frequencies", "ts": "ts"}
+            ts_specs = None
+            freq_specs = None
+
+            if "ts" in multi_specs:
+                ts_specs = str("")
+                ts_specs += self.handle_specifications(multi_specs["ts"])
+            if "freq" in multi_specs:
+                freq_specs = str("")
+                freq_specs += self.handle_specifications(multi_specs["freq"])
+            elif "ts" not in multi_specs:
+                ts_specs = None
+            elif "freq" not in multi_specs:
+                freq_specs = None
+            else:
+                raise InvalidParameter(
+                    f"Keys in {multi_specs.keys()} not valid for {self.calc.type} type of calculation"
+                )
+
+            cmls_ts = self.create_command_line_string(
+                calc_type["ts"], method, basis_set, specifications=ts_specs
+            )
+            cmls_freqs = self.create_command_line_string(
+                calc_type["freq"], method, basis_set, specifications=freq_specs
+            )
+            self.command_line += f"{cmls_ts}\n{cmls_freqs}"
         else:
             raise UnimplementedError(
                 f"Calculation Type {self.calc.type} not implemented yet for psi4"

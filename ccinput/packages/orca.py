@@ -56,6 +56,7 @@ class OrcaCalculation:
         CalcType.UVVIS,
         CalcType.MO,
         CalcType.OPTFREQ,
+        CalcType.TSFREQ,
     ]
 
     def __init__(self, calc):
@@ -142,6 +143,10 @@ class OrcaCalculation:
             self.command_line = "OPT "
         elif self.calc.type == CalcType.OPTFREQ:
             self.command_line = "OPT FREQ "
+        elif self.calc.type == CalcType.TSFREQ:
+            self.command_line = "OPTTS FREQ "
+            if self.calc.parameters.theory_level != "xtb":
+                self.add_to_block("geom", ["Calc_Hess true"])
         elif self.calc.type == CalcType.TS:
             self.command_line = "OPTTS "
             if self.calc.parameters.theory_level != "xtb":

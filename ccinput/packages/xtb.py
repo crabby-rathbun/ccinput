@@ -13,6 +13,7 @@ class XtbCalculation:
         CalcType.SP: "xtb",
         CalcType.UVVIS_TDA: "stda",
         CalcType.OPTFREQ: "xtb",
+        CalcType.TSFREQ: "xtb",
         CalcType.CONF_SEARCH: "crest",
         CalcType.CONSTR_CONF_SEARCH: "crest",
     }
@@ -323,6 +324,8 @@ class XtbCalculation:
             self.main_command += "--opt "
         elif self.calc.type == CalcType.OPTFREQ:
             self.main_command = "--ohess "  # Not sure if the tightness will be parsed
+        elif self.calc.type == CalcType.TSFREQ:
+            self.main_command = "--ohess "  # Same as OPTFREQ for xtb
         elif self.calc.type == CalcType.CONSTR_CONF_SEARCH:
             self.main_command += f"-cinp {aux_input} "
         elif self.calc.type == CalcType.CONSTR_OPT:
